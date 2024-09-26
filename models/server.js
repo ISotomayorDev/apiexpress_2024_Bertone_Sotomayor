@@ -13,11 +13,10 @@ class Server {
   }
 
   rutas () {
-    this.app.use('/api/v1/peliculas', require('../routes/peliculas')) // Integrante 1
-    this.app.use('/api/v1/empleados', require('../routes/empleados')) // Integrante 2
-    /*   this.app.use('*', (req, res) => {
-            res.status(404).send('Page not found');
-        }); // Integrante 2 */
+    this.app.use('/api/v1/clima', require('../routes/clima'))
+    this.app.use('/api/v1/geocoding', require('../routes/geocoding'))
+    this.app.use('/api/v1/aire', require('../routes/aire'))
+    this.app.use('/api/v1/pronostico', require('../routes/pronostico'))
   }
 
   listen () {

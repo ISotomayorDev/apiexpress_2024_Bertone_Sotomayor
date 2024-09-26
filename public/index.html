@@ -3,14 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
     <title>API EXPRESS</title>
 </head>
 <body>
+    <div>
     <h1>Api con NodeJS</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit ea modi recusandae quam odio? Reiciendis earum repudiandae et, dolorum doloremque eaque facilis reprehenderit quia nostrum quibusdam laudantium eveniet fugit dolores?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit ea modi recusandae quam odio? Reiciendis earum repudiandae et, dolorum doloremque eaque facilis reprehenderit quia nostrum quibusdam laudantium eveniet fugit dolores?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit ea modi recusandae quam odio? Reiciendis earum repudiandae et, dolorum doloremque eaque facilis reprehenderit quia nostrum quibusdam laudantium eveniet fugit dolores?</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit ea modi recusandae quam odio? Reiciendis earum repudiandae et, dolorum doloremque eaque facilis reprehenderit quia nostrum quibusdam laudantium eveniet fugit dolores?</p>
-    
+    <h2>Trabajada con OpenWeather</h2>
+    <h4><a href="https://github.com/Lucasbertone16/apiexpress_2024_Bertone_Sotomayor.git" target="_blank"><u>Grupo 7 >> Lucas Bertone e Ignacio Sotomayor</u></a></h4>
+    <hr>
+    <h4><i>Rutas de la API:</i></h4>
+    <ul>
+        <li><u>Clima por coordenadas:</u> '/api/v1/clima/coordenadas?lat=${lat}&lon=${lon}', ejemplo: <a href="http://localhost:3000/api/v1/clima/coordenadas?lat=-34.61&lon=-58.38" target="_blank">/api/v1/clima/coordenadas?lat=-34.61&lon=-58.38</a></li>
+        <li><u>Clima por el nombre de la ciudad filtrado:</u> '/api/v1/clima/ciudad/:ciudad', ejemplo: <a href="http://localhost:3000/api/v1/clima/ciudad/Buenos%20Aires" target="_blank">/api/v1/clima/ciudad/Buenos Aires</a></li>
+        <li><u>Clima por el nombre de la ciudad:</u> '/api/v1/clima/ciudad?ciudad={nombre_ciudad}', ejemplo: <a href="http://localhost:3000/api/v1/clima/ciudad?ciudad=Paris" target="_blank">/api/v1/clima/ciudad?ciudad=Paris</a></li>
+        <li><u>Pronóstico a 5 días por coordenadas:</u> '/api/v1/pronostico/extendido?lat={lat}&lon={lon}', ejemplo: <a href="http://localhost:3000/api/v1/pronostico/extendido?lat=-34.61&lon=-58.38" target="_blank">/api/v1/pronostico/extendido?lat=-34.61&lon=-58.38</a></li>
+        <li><u>Pronóstico a 5 días por el nombre de la ciudad:</u> '/api/v1/pronostico/extendidoPorCiudad/:ciudad', ejemplo: <a href="http://localhost:3000/api/v1/pronostico/extendidoPorCiudad/Bahia%20Blanca" target="_blank">/api/v1/pronostico/extendidoPorCiudad/Bahia Blanca</a></li>
+        <li><u>Pronóstico a 5 días por Código Postal:</u> '/api/v1/pronostico/extendidoPorCodigoPostal?zip={zip}', ejemplo: <a href="http://localhost:3000/api/v1/pronostico/extendidoPorCodigoPostal?zip=8000" target="_blank">/api/v1/pronostico/extendidoPorCodigoPostal?zip=8000</a></li>
+        <li><u>Datos actuales de Contaminación del aire:</u> '/api/v1/aire/polucion?lat={lat}&lon={lon}', ejemplo: <a href="http://localhost:3000/api/v1/aire/polucion?lat=-34.61&lon=-58.38" target="_blank">/api/v1/aire/polucion?lat=-34.61&lon=-58.38</a></li>
+        <li><u>Datos históricos de Contaminación del aire:</u> '/api/v1/aire/polucionHistorica?lat={lat}&lon={lon}&start={start}&end={end}', ejemplo: <a href="http://localhost:3000/api/v1/aire/polucionHistorica?lat=-34.61&lon=-58.38&start=1694803200&end=1694889600" target="_blank">/api/v1/aire/polucionHistorica?lat=-34.61&lon=-58.38&start=1694803200&end=1694889600</a></li>
+        <li><u>Datos a futuro de Contaminación del aire:</u> '/api/v1/aire/polucionFutura?lat={lat}&lon={lon}', ejemplo: <a href="http://localhost:3000/api/v1/aire/polucionFutura?lat=-34.61&lon=-58.38" target="_blank">/api/v1/aire/polucionFutura?lat=-34.61&lon=-58.38</a></li>
+        <li><u>Obtener coordenadas de Ciudad:</u> '/api/v1/geocoding/ciudad?q=${q}', ejemplo: <a href="http://localhost:3000/api/v1/geocoding/ciudad?q=Buenos%20Aires" target="_blank">/api/v1/geocoding/ciudad?q=Buenos Aires</a></li> 
+        <li><u>Obtener coordenadas de Código Postal:</u> '/api/v1/geocoding/codigoPostal?zip=${zip}', ejemplo: <a href="http://localhost:3000/api/v1/geocoding/codigoPostal?zip=8000" target="_blank">/api/v1/geocoding/codigoPostal?zip=8000</a></li>
+        <li><u>Obtener ciudad por coordenadas:</u> '/api/v1/geocoding/coordenadas?lat=${lat}&lon=${lon}', ejemplo: <a href="http://localhost:3000/api/v1/geocoding/coordenadas?lat=-34.61&lon=-58.38" target="_blank">/api/v1/geocoding/coordenadas?lat=-34.61&lon=-58.38</a></li>
+    </ul>
+    </div>   
 </body>
 </html>
