@@ -36,40 +36,56 @@ const getClima5dias = async (req, res) => {
 }
 
 const getClima5diasPorCiudad = async (req, res) => {
-  const { units = 'metric', lang = 'sp' } = req.query
-  const { ciudad } = req.params
+  const { units = 'metric', lang = 'sp' } = req.query;
+  const { ciudad } = req.params;
 
   if (!ciudad) {
-    return res.status(400).json({ error: 'Ingrese la ciudad para poder continuar' })
+    return res.status(400).json({ error: 'Ingrese la ciudad para poder continuar' });
   }
 
-  axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${ciudad}&appid=${process.env.API_KEY}&lang=${lang}&units=${units}`)
+  axios
+    .get(`https://api.openweathermap.org/data/2.5/forecast?q=${ciudad}&appid=${process.env.API_KEY}&lang=${lang}&units=${units}`)
     .then((response) => {
-      const { data } = response
+      const { list } = response.data;
+
+      // Filtrar para obtener solo un resultado por día (hora fija: 12:00)
+      const pronosticoSemanal = list.filter((item) => item.dt_txt.includes('12:00:00'));
+
+      // Formatear los datos para incluir solo la información relevante
+      const pronosticoFormatado = pronosticoSemanal.map((item) => ({
+        fecha: item.dt_txt.split(' ')[0], // Fecha
+        temperatura: item.main.temp, // Temperatura
+        descripcion: item.weather[0].description, // Descripción del clima
+        icono: item.weather[0].icon, // Ícono del clima
+        humedad: item.main.humidity, // Humedad
+        viento: item.wind.speed, // Velocidad del viento
+      }));
+
       res.status(200).json({
         msg: 'Ok',
-        data
-      })
+        data: pronosticoFormatado,
+      });
     })
     .catch((error) => {
-      console.error(error)
+      console.error(error);
       if (error.response) {
         return res.status(error.response.status).json({
           status: 'error',
           msg: 'Error al obtener datos del clima',
           error: error.response.data.message || error.response.statusText,
-          statusCode: error.response.status
-        })
+          statusCode: error.response.status,
+        });
       } else {
         res.status(500).json({
           status: 'error',
           msg: 'Error inesperado al obtener la información',
           error: error.message,
-          statusCode: 500
-        })
+          statusCode: 500,
+        });
       }
-    })
-}
+    });
+};
+
 
 const getClima5diasPorCodigoPostal = async (req, res) => {
   const { zip, country = 'AR', units = 'metric', lang = 'sp' } = req.query
