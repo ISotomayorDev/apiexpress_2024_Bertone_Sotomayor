@@ -53,12 +53,14 @@ const getClima5diasPorCiudad = async (req, res) => {
 
       // Formatear los datos para incluir solo la información relevante
       const pronosticoFormatado = pronosticoSemanal.map((item) => ({
+        nombre_ciudad: ciudad,
         fecha: item.dt_txt.split(' ')[0], // Fecha
         temperatura: item.main.temp, // Temperatura
         descripcion: item.weather[0].description, // Descripción del clima
         icono: item.weather[0].icon, // Ícono del clima
         humedad: item.main.humidity, // Humedad
-        viento: item.wind.speed // Velocidad del viento
+        viento: item.wind.speed, // Velocidad del viento
+        sensacion_termica: item.main.feels_like // Sensación térmica
       }))
 
       res.status(200).json({

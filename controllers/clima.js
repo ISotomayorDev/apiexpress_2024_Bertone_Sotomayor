@@ -109,13 +109,15 @@ const getClimaPorCiudadFiltrado = async (req, res) => {
     .then((response) => {
       const { main, wind, weather } = response.data
       const filtro = {
+        nombre_ciudad: ciudad,
         descripcion: weather[0].description,
         temperatura: main.temp,
         temp_minima: main.temp_min,
         temp_maxima: main.temp_max,
         sensacion_termica: main.feels_like,
         humedad: main.humidity,
-        viento: wind.speed
+        viento: wind.speed,
+        icono: weather[0].icon
       }
       res.status(200).json({
         status: 'ok',
