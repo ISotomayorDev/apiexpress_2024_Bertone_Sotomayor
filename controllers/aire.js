@@ -1,4 +1,6 @@
 const axios = require('axios')
+const AireRepository = require('../repositories/aireRepository')
+
 
 const getPolucionFutura = async (req, res) => {
   const { lon, lat, units = 'metric', lang = 'sp' } = req.query
@@ -36,39 +38,48 @@ const getPolucionFutura = async (req, res) => {
 }
 
 const getPolucionAire = async (req, res) => {
-  const { lat, lon, units = 'metric', lang = 'sp' } = req.query
+  const { lat, lon, units = 'metric', lang = 'sp' } = req.query;
 
   if (!lat || !lon) {
-    return res.status(400).json({ error: 'Latitude y Longitus son necesarias.' })
+    return res.status(400).json({ error: 'Latitude y Longitud son necesarias.' });
   }
 
-  axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&lang=${lang}&units=${units}`)
-    .then((response) => {
-      const { data } = response
-      res.status(200).json({
-        msg: 'Ok',
-        data
-      })
-    })
-    .catch((error) => {
-      console.error(error)
-      if (error.response) {
-        return res.status(error.response.status).json({
-          status: 'error',
-          msg: 'Error al obtener datos del clima',
-          error: error.response.data.message || error.response.statusText,
-          statusCode: error.response.status
-        })
-      } else {
-        res.status(500).json({
-          status: 'error',
-          msg: 'Error inesperado al obtener la información',
-          error: error.message,
-          statusCode: 500
-        })
-      }
-    })
-}
+  try {
+    const response = await axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&lang=${lang}&units=${units}`);
+    const { data } = response;
+
+    // Crear instancia del repositorio y guardar los datos en la base de datos
+    const aireRepository = new AireRepository();
+
+    await aireRepository.guardarAire({
+      nombre_ciudad: `Lat: ${lat}, Lon: ${lon}`,
+      data
+    });
+
+    res.status(200).json({
+      msg: 'Ok',
+      data
+    });
+  } catch (error) {
+    console.error(error);
+
+    if (error.response) {
+      return res.status(error.response.status).json({
+        status: 'error',
+        msg: 'Error al obtener datos del clima',
+        error: error.response.data.message || error.response.statusText,
+        statusCode: error.response.status
+      });
+    } else {
+      res.status(500).json({
+        status: 'error',
+        msg: 'Error inesperado al obtener la información',
+        error: error.message,
+        statusCode: 500
+      });
+    }
+  }
+};
 
 const getPolucionAireHistorica = async (req, res) => {
   const { lat, lon, start, end, units = 'metric', lang = 'sp' } = req.query
