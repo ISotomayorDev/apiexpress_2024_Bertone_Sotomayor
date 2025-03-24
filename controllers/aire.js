@@ -36,27 +36,21 @@ const getPolucionFutura = async (req, res) => {
 }
 
 const getPolucionAire = async (req, res) => {
-  const { lat, lon, units = 'metric', lang = 'sp' } = req.query;
+  const { lat, lon, units = 'metric', lang = 'sp' } = req.query
 
   if (!lat || !lon) {
-    return res.status(400).json({ error: 'Latitude y Longitud son necesarias.' });
+    return res.status(400).json({ error: 'Latitude y Longitud son necesarias.' })
   }
 
   try {
-    const response = await axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&lang=${lang}&units=${units}`);
-    const { data } = response;
-
-    await aireRepository.guardarAire({
-      nombre_ciudad: `Lat: ${lat}, Lon: ${lon}`,
-      data
-    });
-
+    const response = await axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&lang=${lang}&units=${units}`)
+    const { data } = response
     res.status(200).json({
       msg: 'Ok',
       data
-    });
+    })
   } catch (error) {
-    console.error(error);
+    console.error(error)
 
     if (error.response) {
       return res.status(error.response.status).json({
@@ -64,17 +58,17 @@ const getPolucionAire = async (req, res) => {
         msg: 'Error al obtener datos del clima',
         error: error.response.data.message || error.response.statusText,
         statusCode: error.response.status
-      });
+      })
     } else {
       res.status(500).json({
         status: 'error',
         msg: 'Error inesperado al obtener la información',
         error: error.message,
         statusCode: 500
-      });
+      })
     }
   }
-};
+}
 
 const getPolucionAireHistorica = async (req, res) => {
   const { lat, lon, start, end, units = 'metric', lang = 'sp' } = req.query
