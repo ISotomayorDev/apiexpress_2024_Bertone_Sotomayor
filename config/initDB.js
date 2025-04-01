@@ -1,4 +1,4 @@
-const db = require('./conexionDB'); // Importar la conexión a SQLite
+const db = require('./conexionDB') // Importar la conexión a SQLite
 
 // Crear tablas en SQLite
 db.serialize(() => {
@@ -15,9 +15,9 @@ db.serialize(() => {
     icono TEXT NOT NULL,
     fecha_consulta TEXT DEFAULT CURRENT_TIMESTAMP
   )`, (err) => {
-    if (err) console.error('❌ Error al crear la tabla clima:', err);
-    else console.log('✅ Tabla "clima" creada correctamente');
-  });
+    if (err) console.error('❌ Error al crear la tabla clima:', err)
+    else console.log('✅ Tabla "clima" creada correctamente')
+  })
 
   db.run(`CREATE TABLE IF NOT EXISTS pronostico (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -30,9 +30,9 @@ db.serialize(() => {
     viento REAL NOT NULL,
     sensacion_termica REAL NOT NULL
   )`, (err) => {
-    if (err) console.error('❌ Error al crear la tabla pronostico:', err);
-    else console.log('✅ Tabla "pronostico" creada correctamente');
-  });
+    if (err) console.error('❌ Error al crear la tabla pronostico:', err)
+    else console.log('✅ Tabla "pronostico" creada correctamente')
+  })
 
   db.run(`CREATE TABLE IF NOT EXISTS aire (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -48,13 +48,13 @@ db.serialize(() => {
     nh3 REAL NOT NULL,
     fecha TEXT DEFAULT CURRENT_TIMESTAMP
   )`, (err) => {
-    if (err) console.error('❌ Error al crear la tabla aire:', err);
-    else console.log('✅ Tabla "aire" creada correctamente');
-  });
-});
+    if (err) console.error('❌ Error al crear la tabla aire:', err)
+    else console.log('✅ Tabla "aire" creada correctamente')
+  })
+})
 
 // Cerrar conexión después de crear las tablas
 db.close((err) => {
-  if (err) console.error('❌ Error al cerrar la conexión:', err);
-  else console.log('✅ Conexión cerrada después de la creación de tablas');
-});
+  if (err) console.error('❌ Error al cerrar la conexión:', err)
+  else console.log('✅ Conexión cerrada después de la creación de tablas')
+})
