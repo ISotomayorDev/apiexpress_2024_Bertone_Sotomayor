@@ -1,21 +1,14 @@
-// config/conexionDB.js
-const mysql = require('mysql2/promise') // Usa mysql2/promise
+const sqlite3 = require('sqlite3').verbose();
+const path = require('path');
 
-const conexionDB = async () => {
-  try {
-    const connection = await mysql.createConnection({
-      host: process.env.DB_HOST || 'localhost',
-      user: process.env.DB_USER || 'root',
-      password: process.env.DB_PASSWORD || 'root',
-      database: process.env.DB_NAME || 'api_express'
-    })
+const dbPath = path.join(__dirname, '../database/api_express.db'); // Ruta donde se guardará la BD
 
-    console.log('Conexión a la base de datos establecida')
-    return connection // Devuelve la conexión
-  } catch (err) {
-    console.error('Error al conectar a la base de datos:', err)
-    throw err // Lanza el error para manejarlo en el repositorio
+const db = new sqlite3.Database(dbPath, (err) => {
+  if (err) {
+    console.error('❌ Error al conectar a SQLite:', err);
+  } else {
+    console.log('✅ Base de datos SQLite conectada en', dbPath);
   }
-}
+});
 
-module.exports = conexionDB // Exporta la función para conectar a la base de datos
+module.exports = db;
