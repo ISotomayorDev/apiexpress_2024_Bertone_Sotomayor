@@ -44,20 +44,22 @@ const getPolucionAire = async (req, res) => {
   }
 
   try {
-    const response = await axios.get(`http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&lang=${lang}&units=${units}`)
-    const { data } = response
+    const response = await axios.get(
+      `http://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${process.env.API_KEY}&lang=${lang}&units=${units}`
+    )
 
-    // Crear instancia del repositorio y guardar los datos en la base de datos
+    const { data } = response
     const aireRepository = new AireRepository()
 
-    await aireRepository.guardarAire({
+    const resultado = await aireRepository.guardarAire({
       nombre_ciudad: `Lat: ${lat}, Lon: ${lon}`,
       data
     })
 
     res.status(200).json({
       msg: 'Ok',
-      data
+      data,
+      resultado
     })
   } catch (error) {
     console.error(error)

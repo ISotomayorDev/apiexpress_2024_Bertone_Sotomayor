@@ -122,8 +122,14 @@ const getClimaPorCiudadFiltrado = async (req, res) => {
       icono: weather[0].icon
     }
 
-    // Guardar en la base de datos
-    await climaRepository.guardarClima(climaData)
+    // 🔹 Verificar si la ciudad ya está en la base de datos
+    const existe = await climaRepository.existeCiudad(ciudad)
+
+    if (!existe) {
+      await climaRepository.guardarClima(climaData) // Solo guarda si no existe
+    } else {
+      console.log(`ℹ️ La ciudad "${ciudad}" ya existe en la base de datos, no se guardará nuevamente.`)
+    }
 
     res.status(200).json({
       status: 'ok',

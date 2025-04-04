@@ -66,7 +66,7 @@ const getClima5diasPorCiudad = async (req, res) => {
       sensacion_termica: item.main.feels_like // Sensación térmica
     }))
 
-    // Guardar en la base de datos usando el repositorio
+    // Guardar en la base de datos solo si no existe
     const pronosticoRepo = new PronosticoRepository()
     await pronosticoRepo.guardarPronosticos(pronosticoFormatado)
 
@@ -93,8 +93,6 @@ const getClima5diasPorCiudad = async (req, res) => {
     }
   }
 }
-
-module.exports = { getClima5diasPorCiudad }
 
 const getClima5diasPorCodigoPostal = async (req, res) => {
   const { zip, country = 'AR', units = 'metric', lang = 'sp' } = req.query
