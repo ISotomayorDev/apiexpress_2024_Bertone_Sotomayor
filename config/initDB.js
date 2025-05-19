@@ -64,7 +64,8 @@ db.serialize(() => {
       pm2_5 REAL NOT NULL,
       pm10 REAL NOT NULL,
       nh3 REAL NOT NULL,
-      fecha TEXT DEFAULT CURRENT_TIMESTAMP
+      fecha TEXT DEFAULT CURRENT_TIMESTAMP,
+      es_peligroso INTEGER DEFAULT 0
     )`,
     (err) => {
       if (err) console.error('❌ Error al crear la tabla aire:', err)
